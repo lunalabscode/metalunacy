@@ -1,0 +1,90 @@
+{
+  "engines": {
+    "ollama": {
+      "versions": [
+        {
+          "version": "v0.30.5",
+          "features": [
+            { "id": "parallel_computing", "label": "Parallel Computing" }
+          ]
+        }
+      ],
+      "repositories": [
+        {
+          "url": "https://github.com/ollama/ollama",
+          "buildTool": "go",
+          "buildDependencies": ["gcc", "git"],
+          "buildFlags": [
+            { "id": "goflags", "label": "Go Build Flags", "makeFlag": "GOFLAGS=-buildvcs=false" },
+            { "id": "cgo_enabled", "label": "CGO Enabled", "makeFlag": "CGO_ENABLED=1" }
+          ]
+        }
+      ]
+    },
+    "llamacpp": {
+      "versions": [
+        {
+          "version": "b4600",
+          "features": [
+            { "id": "flash_attention", "label": "Flash Attention" },
+            { "id": "rpc_execution", "label": "RPC Execution" },
+            { "id": "gguf_v3_parsing", "label": "GGUFv3 Parsing" }
+          ]
+        },
+        {
+          "version": "b4200",
+          "features": [
+            { "id": "cuda_acceleration", "label": "CUDA Acceleration" },
+            { "id": "vulkan_backend", "label": "Vulkan Backend" }
+          ]
+        }
+      ],
+      "repositories": [
+        {
+          "url": "https://github.com/ggerganov/llama.cpp",
+          "buildTool": "cmake",
+          "buildDependencies": ["cmake", "gcc", "cuda-toolkit"],
+          "buildFlags": [
+            { "id": "ggml_cuda", "label": "GGML CUDA", "makeFlag": "GGML_CUDA=ON" },
+            { "id": "ggml_avx2", "label": "GGML AVX2", "makeFlag": "GGML_AVX2=ON" },
+            { "id": "ggml_fma", "label": "GGML FMA", "makeFlag": "GGML_FMA=ON" },
+            { "id": "ggml_metal", "label": "GGML Metal", "makeFlag": "GGML_METAL=ON" }
+          ]
+        }
+      ]
+    },
+    "vllm": {
+      "versions": [
+        {
+          "version": "v0.7.2",
+          "features": [
+            { "id": "paged_attention_v2", "label": "PagedAttention v2" },
+            { "id": "chunked_prefill", "label": "Chunked Prefill" },
+            { "id": "speculative_decoding", "label": "Speculative Decoding" },
+            { "id": "fp8_execution", "label": "FP8 Execution" }
+          ]
+        },
+        {
+          "version": "v0.6.0",
+          "features": [
+            { "id": "tensor_parallelism", "label": "Tensor Parallelism" },
+            { "id": "pipeline_parallelism", "label": "Pipeline Parallelism" },
+            { "id": "flashinfer_integration", "label": "FlashInfer Integration" }
+          ]
+        }
+      ],
+      "repositories": [
+        {
+          "url": "https://github.com/vllm-project/vllm",
+          "buildTool": "pip",
+          "buildDependencies": ["python", "cuda-toolkit", "gcc"],
+          "buildFlags": [
+            { "id": "target_device", "label": "Target Device", "makeFlag": "VLLM_TARGET_DEVICE=cuda" },
+            { "id": "max_jobs", "label": "Max Jobs", "makeFlag": "MAX_JOBS=4" },
+            { "id": "nvcc_flags", "label": "NVCC Flags", "makeFlag": "NVCC_FLAGS=--threads 4" }
+          ]
+        }
+      ]
+    }
+  }
+}
