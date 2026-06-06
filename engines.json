@@ -26,11 +26,19 @@
             "arch": ["go", "cmake", "gcc", "git"],
             "ubuntu": ["golang-go", "cmake", "build-essential", "git"]
           },
-          "buildFlags": [
-            { "id": "ollama_llama_backends", "label": "Ollama Llama Backends", "makeFlag": "OLLAMA_LLAMA_BACKENDS=cuda_v13" },
-            { "id": "cuda_architectures", "label": "CUDA Architectures", "makeFlag": "-DCMAKE_CUDA_ARCHITECTURES=native" },
-            { "id": "custom_cpu_defs", "label": "Custom CPU Definitions", "makeFlag": "OLLAMA_CUSTOM_CPU_DEFS=-DLLAMA_AVX2=on" }
-          ]
+          "buildFlags": {
+            "default": [
+              { "id": "custom_cpu_defs", "label": "Custom CPU Definitions", "type": "env", "key": "OLLAMA_CUSTOM_CPU_DEFS", "value": "-DLLAMA_AVX2=on" }
+            ],
+            "nvidia": [
+              { "id": "ollama_llama_backends", "label": "Ollama Llama Backends", "type": "env", "key": "OLLAMA_LLAMA_BACKENDS", "value": "cuda_v13" },
+              { "id": "cuda_architectures", "label": "CUDA Architectures", "type": "env", "key": "CMAKE_CUDA_ARCHITECTURES", "value": "native" }
+            ],
+            "amd": [
+              { "id": "ollama_llama_backends", "label": "Ollama Llama Backends", "type": "env", "key": "OLLAMA_LLAMA_BACKENDS", "value": "rocm_v7_2" },
+              { "id": "hip_architectures", "label": "HIP Architectures", "type": "env", "key": "CMAKE_HIP_ARCHITECTURES", "value": "native" }
+            ]
+          }
         }
       ]
     },
@@ -54,18 +62,26 @@
           "buildCommand": "cmake --build build --config Release",
           "buildPreCommand": "cmake -B build -DCMAKE_BUILD_TYPE=Release",
           "buildDependencies": {
-            "default": ["git", "cmake", "build-essential"],
+            "default": ["git", "cmake"],
             "nvidia": ["cuda-toolkit"],
             "amd": ["rocm-hip-sdk", "hipblas"],
             "arch": ["cmake", "gcc", "git", "openblas"],
             "ubuntu": ["cmake", "build-essential", "git", "libopenblas-dev"]
           },
-          "buildFlags": [
-            { "id": "ggml_cuda", "label": "GGML CUDA", "makeFlag": "-DGGML_CUDA=ON" },
-            { "id": "ggml_avx2", "label": "GGML AVX2", "makeFlag": "-DGGML_AVX2=ON" },
-            { "id": "ggml_fma", "label": "GGML FMA", "makeFlag": "-DGGML_FMA=ON" },
-            { "id": "ggml_metal", "label": "GGML Metal", "makeFlag": "-DGGML_METAL=ON" }
-          ]
+          "buildFlags": {
+            "default": [
+              { "id": "ggml_avx2", "label": "GGML AVX2", "type": "parameter", "key": "-DGGML_AVX2", "value": "ON" },
+              { "id": "ggml_fma", "label": "GGML FMA", "type": "parameter", "key": "-DGGML_FMA", "value": "ON" }
+            ],
+            "nvidia": [
+              { "id": "ggml_cuda", "label": "GGML CUDA", "type": "parameter", "key": "-DGGML_CUDA", "value": "ON" },
+              { "id": "cuda_architectures", "label": "CUDA Architectures", "type": "parameter", "key": "-DCMAKE_CUDA_ARCHITECTURES", "value": "all" }
+            ],
+            "amd": [
+              { "id": "ggml_hipblas", "label": "GGML HIPBLAS", "type": "parameter", "key": "-DGGML_HIPBLAS", "value": "ON" },
+              { "id": "hip_architectures", "label": "HIP Architectures", "type": "parameter", "key": "-DCMAKE_HIP_ARCHITECTURES", "value": "native" }
+            ]
+          }
         },
         {
           "label": "TheTom llama-cpp-turboquant",
@@ -74,18 +90,23 @@
           "buildCommand": "cmake --build build --config Release",
           "buildPreCommand": "cmake -B build -DCMAKE_BUILD_TYPE=Release",
           "buildDependencies": {
-            "default": ["git", "cmake", "build-essential"],
+            "default": ["git", "cmake"],
             "nvidia": ["cuda-toolkit"],
             "amd": ["rocm-hip-sdk"],
             "arch": ["cmake", "gcc", "git"],
             "ubuntu": ["cmake", "build-essential", "git"]
           },
-          "buildFlags": [
-            { "id": "ggml_cuda", "label": "GGML CUDA", "makeFlag": "-DGGML_CUDA=ON" },
-            { "id": "ggml_avx2", "label": "GGML AVX2", "makeFlag": "-DGGML_AVX2=ON" },
-            { "id": "ggml_fma", "label": "GGML FMA", "makeFlag": "-DGGML_FMA=ON" },
-            { "id": "ggml_metal", "label": "GGML Metal", "makeFlag": "-DGGML_METAL=ON" }
-          ]
+          "buildFlags": {
+            "default": [
+              { "id": "ggml_avx2", "label": "GGML AVX2", "type": "parameter", "key": "-DGGML_AVX2", "value": "ON" }
+            ],
+            "nvidia": [
+              { "id": "ggml_cuda", "label": "GGML CUDA", "type": "parameter", "key": "-DGGML_CUDA", "value": "ON" }
+            ],
+            "amd": [
+              { "id": "ggml_hipblas", "label": "GGML HIPBLAS", "type": "parameter", "key": "-DGGML_HIPBLAS", "value": "ON" }
+            ]
+          }
         }
       ]
     },
@@ -113,11 +134,18 @@
             "arch": ["python", "python-pip", "git", "gcc"],
             "ubuntu": ["python3", "python3-pip", "git", "build-essential"]
           },
-          "buildFlags": [
-            { "id": "target_device", "label": "Target Device", "makeFlag": "VLLM_TARGET_DEVICE=cuda" },
-            { "id": "max_jobs", "label": "Max Jobs", "makeFlag": "MAX_JOBS=4" },
-            { "id": "nvcc_flags", "label": "NVCC Flags", "makeFlag": "NVCC_FLAGS=--threads 4" }
-          ]
+          "buildFlags": {
+            "default": [
+              { "id": "max_jobs", "label": "Max Jobs", "type": "env", "key": "MAX_JOBS", "value": "4" }
+            ],
+            "nvidia": [
+              { "id": "target_device", "label": "Target Device", "type": "env", "key": "VLLM_TARGET_DEVICE", "value": "cuda" },
+              { "id": "nvcc_flags", "label": "NVCC Flags", "type": "env", "key": "NVCC_FLAGS", "value": "--threads 4" }
+            ],
+            "amd": [
+              { "id": "target_device", "label": "Target Device", "type": "env", "key": "VLLM_TARGET_DEVICE", "value": "rocm" }
+            ]
+          }
         }
       ]
     }
