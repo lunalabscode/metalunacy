@@ -1,0 +1,11 @@
+[information]
+engine = "llama.cpp"
+supported_versions = [
+    "b9543"
+]
+
+[features]
+parallel_computing = "Parallel Computing"
+gguf = "GGUF"
+kquants = "KQuants"
+hybrid-execution = "Hybrid Execution"

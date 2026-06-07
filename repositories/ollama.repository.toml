@@ -1,0 +1,24 @@
+[information]
+engine = "ollama"
+url = "https://github.com/ollama/ollama"
+
+[build]
+tool = "go"
+pre_command = "go generate ./..."
+command = "go build ."
+
+[build.dependencies.distro]
+arch = ["go", "cmake", "gcc", "git"]
+ubuntu = ["golang-go", "cmake", "build-essential", "git"]
+
+[build.dependencies.target]
+cpu = []
+amd = ["rocm-hip-sdk"]
+nvidia = ["cuda-toolkit"]
+other = []
+
+[build.flags.target.common]
+[build.flags.target.cpu]
+[build.flags.target.amd]
+[build.flags.target.nvidia]
+[build.flags.target.other]

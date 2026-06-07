@@ -1,0 +1,24 @@
+[information]
+engine = "llama.cpp"
+url = "https://github.com/ggerganov/llama.cpp"
+
+[build]
+tool = "cmake"
+pre_command = ""
+command = "cmake -B build -DCMAKE_BUILD_TYPE=Release"
+
+[build.dependencies.distro]
+arch = ["cmake", "gcc", "git", "openblas"]
+ubuntu = ["cmake", "build-essential", "git", "libopenblas-dev"]
+
+[build.dependencies.target]
+cpu = []
+amd = ["rocm-hip-sdk", "hipblas"]
+nvidia = ["cuda-toolkit"]
+other = []
+
+[build.flags.target.common]
+[build.flags.target.cpu]
+[build.flags.target.amd]
+[build.flags.target.nvidia]
+[build.flags.target.other]

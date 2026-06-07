@@ -1,0 +1,9 @@
+[information]
+engine = "vllm"
+supported_versions = [
+    "v0.22.1"
+]
+
+[features]
+parallel_computing = "Parallel Computing"
+optimized-concurrency = "Optimized Multi-User Concurrency"

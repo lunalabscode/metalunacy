@@ -1,0 +1,11 @@
+[information]
+engine = "ollama"
+supported_versions = [
+    "v0.30.5"
+]
+
+[features]
+parallel_computing = "Parallel Computing"
+gguf = "GGUF"
+kquants = "KQuants"
+hybrid-execution = "Hybrid Execution"
