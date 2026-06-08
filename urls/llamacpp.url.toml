@@ -1,0 +1,12 @@
+[information]
+engine = "llama.cpp"
+
+[versions.cpu]
+b9543 = "https://github.com/ggml-org/llama.cpp/releases/download/b9543/llama-b9543-bin-ubuntu-x64.tar.gz"
+
+[versions.vulkan]
+b9543 = "https://github.com/ggml-org/llama.cpp/releases/download/b9543/llama-b9543-bin-ubuntu-vulkan-x64.tar.gz"
+
+[versions.amd]
+b9543 = "https://github.com/ggml-org/llama.cpp/releases/download/b9543/llama-b9543-bin-ubuntu-rocm-7.2-x64.tar.gz"
+

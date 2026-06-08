@@ -1,6 +1,6 @@
 [information]
 engine = "llama.cpp"
-url = "https://github.com/ggerganov/llama.cpp"
+url = "https://github.com/ggml-org/llama.cpp"
 
 [build]
 tool = "cmake"

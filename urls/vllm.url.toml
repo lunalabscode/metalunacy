@@ -1,0 +1,12 @@
+[information]
+engine = "ollama"
+
+[versions.cpu]
+"v0.22.1" = "https://github.com/ggml-org/llama.cpp/releases/download/b9543/llama-b9543-bin-ubuntu-x64.tar.gz"
+
+[versions.vulkan]
+"v0.22.1"  = "https://github.com/ggml-org/llama.cpp/releases/download/b9543/llama-b9543-bin-ubuntu-vulkan-x64.tar.gz"
+
+[versions.amd]
+"v0.22.1"  = "https://github.com/ggml-org/llama.cpp/releases/download/b9543/llama-b9543-bin-ubuntu-rocm-7.2-x64.tar.gz"
+
